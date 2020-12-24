@@ -116,7 +116,11 @@ print(data_gatunek)
 # Lata i głosnosc
 print(data['Year'])
 
-for i in range(1956,2020):
+lista_max_loud = []
+lista_min_loud = []
+
+
+for i in range(1958,2020):
     data_lata = data[(data['Year'] == i)]
     print('ROK',i)
     maximum = data_lata['Loudness (dB)'].max()
@@ -129,6 +133,23 @@ for i in range(1956,2020):
     print('Czestosc gatunków w minimum:', most_freq_genre_min)
     print('Maximum:', maximum, '\n', max_song['Top Genre'])
     print('Czestosc gatunków w maximum:', most_freq_genre_max)
+    lista_max_loud.append(maximum)
+    lista_min_loud.append(minimum)
+
+arr_min = np.array(lista_min_loud)
+arr_max = np.array(lista_max_loud)
+
+x1 = np.arange(1958,2020)
+y1 = arr_max
+y2 = arr_min
+
+plt.plot(x1,y1, label = 'maksymalna głosnosc')
+plt.plot(x1,y2, label = 'minimalna glosnosc')
+plt.legend()
+plt.title('głosnosc piosenek w czasie')
+plt.xlabel('Rok')
+plt.ylabel('Głosnosc')
+plt.show()
     
 
 
