@@ -24,8 +24,8 @@ data = pd.read_csv(plik)
 # print(beatles['Energy'].mean())
 # print(coldplay['Energy'].mean())
 
-# x = ['Queen','The Beatles','Coldplay']
-# y = [queen['Energy'].mean(),beatles['Energy'].mean(),coldplay['Energy'].mean()]
+# x = ['Queen','Coldplay','The Beatles']
+# y = [queen['Energy'].mean(),coldplay['Energy'].mean(),beatles['Energy'].mean()]
 
 # plt.bar(x,y,color='teal')
 # plt.title('Porównanie sredniej energetycznosci piosenek najpopularniejszych zespołów z listy')
