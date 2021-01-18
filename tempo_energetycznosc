@@ -1,0 +1,50 @@
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+os.chdir('C:\\Users\Beata\Desktop\AiWD') #PODAĆ ODPOWIEDNIĄ ŚCIEŻKĘ
+os.getcwd()
+os.listdir()
+
+plik = "Spotify-2000.csv"
+
+#WCZYTANIE DANYCH 
+data = pd.read_csv(plik)
+#print(data)
+
+#ZMIENNE
+data_tempo = data["Beats Per Minute (BPM)"]
+data_energia = data["Energy"]
+data_rok = data["Year"]
+data_subset = data[["Year", "Beats Per Minute (BPM)", "Energy"]]
+
+#FILTRACJA ZMIENNEJ ROK
+filtr = data_rok >= 1990
+data_tempo = data_tempo[filtr]
+#print(data_tempo)
+data_energia = data_energia[filtr]
+
+#ŚREDNIE TEMPO I ENERGETYCZNOŚĆ
+#pd.options.display.max_rows
+#print([data_tempo.groupby(data_rok).mean()])
+#print([data_energia.groupby(data_rok).mean()])
+
+fig, ax1 = plt.subplots()
+
+color = 'tab:red'
+ax1.set_xlabel('Year')
+ax1.set_ylabel('Tempo [BPM]', color=color)
+ax1.plot(data_tempo.groupby(data_rok).mean(), color=color)
+ax1.tick_params(axis='y', labelcolor=color)
+
+ax2 = ax1.twinx()  
+
+color = 'tab:blue'
+ax2.set_ylabel('Energetyczność [-]', color=color)  
+ax2.plot(data_energia.groupby(data_rok).mean(), color=color)
+ax2.tick_params(axis='y', labelcolor=color)
+
+fig.tight_layout()
+plt.title("Tempo i energetyczność utworów od 1990 do 2019")
+plt.show()
+
