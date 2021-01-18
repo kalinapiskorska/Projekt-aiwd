@@ -1,6 +1,8 @@
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
+import numpy
+import matplotlib.patches as mpatches
 
 os.chdir('C:\\Users\Beata\Desktop\AiWD') #PODAĆ ODPOWIEDNIĄ ŚCIEŻKĘ
 os.getcwd()
@@ -18,10 +20,8 @@ data_rok = data["Year"]
 data_subset = data[["Top Genre", "Year"]]
 #print(data_subset)
 
-pd.options.display.max_rows
-print([data_gatunek.groupby(data_gatunek).count()])
-
 #UPORZĄDKOWANIE ZMIENNEJ GATUNEK
+
 data_gatunek_rock = data_gatunek.str.contains("rock")
 data_gatunek_pop = data_gatunek.str.contains("pop")
 data_gatunek_metal = data_gatunek.str.contains("metal")
@@ -40,6 +40,7 @@ data_gatunek_latin = data_gatunek.str.contains("latin")
 data_gatunek_motown = data_gatunek.str.contains("motown")
 data_gatunek_blues = data_gatunek.str.contains("blues")
 data_gatunek_disco = data_gatunek.str.contains("disco")
+data_gatunek_britishinvasion = data_gatunek.str.contains("british invasion")
 rock_inne = ["british invasion", "permanent wave","dutch prog", "australian psych", "neo mellow", "mellow gold"]
 electronic = ["electronica", "trance", "electro", "j-core", "happy hardcore", "downtempo", "gabba", "edm", "big room", "big beat"]
 pop_inne = ["levenslied", "schlager music", "boy band"]
@@ -96,7 +97,7 @@ for i in range(len(data_gatunek)):
         pusta_lista.append(data_gatunek[i])
 #print(pusta_lista)
 data["Top Genre"] = pusta_lista
-print(data_gatunek)
+#print(data_gatunek)
 
 #JAKIE GATUNKI I ILE RAZY WYSTĘPUJĄ
 #pd.options.display.max_rows
@@ -137,7 +138,7 @@ filtr90 = (data.Year < 2000) & (data.Year > 1989)
 #print([data_gatunek[filtr90].count()])
 
 #LATA 00'
-filtr00 = (data.Year < 2010) & (data.Year > 1999)
+#filtr00 = (data.Year < 2010) & (data.Year > 1999)
 #print(data_subset[filtr00])
 #print([data_gatunek[filtr00].mode()])
 #print([data_gatunek[filtr00].count()])
@@ -148,47 +149,49 @@ filtr10 = (data.Year < 2020) & (data.Year > 2009)
 #print([data_gatunek[filtr10].mode()])
 #print([data_gatunek[filtr10].count()])
 
-#################################################
-#WYKRESY
-print(data_gatunek[filtr50].groupby(data_gatunek).count())
-plt.figure(1, figsize =(7,7))
-plt.pie(data_gatunek[filtr50].groupby(data_gatunek).count(), autopct='%1.1f%%')
-plt.title("Top Genres in the 50's")
-plt.show()
+#WYKRES
+il_adult_st = [7,34,40,10,11,16,5]
+il_country =[0,2,2,1,2,6,13] 
+il_dutch = [0,0,2,4,18,20,7]
+il_electro = [0,0,1,1,12,8,18]
+il_hip = [0,0,0,1,2,13,13]
+il_indie = [0,3,2,10,8,19,37]
+il_metal = [0,0,0,12,39,31,11]
+il_others = [1,5,22,33,23,34,24]
+il_pop = [0,15,40,52,50,89,149]
+il_rock = [1,94,239,216,161,154,105]
+il_soul = [0,5,5,4,5,10,17]
+y = numpy.arange(len(il_adult_st))
 
-print([data_gatunek[filtr60].groupby(data_gatunek).count()])
-plt.figure(1, figsize =(7,7))
-plt.pie(data_gatunek[filtr60].groupby(data_gatunek).count(), autopct='%1.1f%%')
-plt.title("Top Genres in the 60's")
-plt.show()
+plt.barh(y, il_adult_st, color = "blue")
+plt.barh(y, il_others, color = "orange", left=il_adult_st)
+plt.barh(y, il_rock, color = "green", left=list(map(lambda a, o: a + o, il_adult_st, il_others)))
+plt.barh(y, il_country, color = "red", left=list(map(lambda a, o, r: a + o + r, il_adult_st, il_others, il_rock)))
+plt.barh(y, il_indie, color = "purple", left=list(map(lambda a, o, r, c: a + o + r + c, il_adult_st, il_others, il_rock, il_country)))
+plt.barh(y, il_pop, color = "brown", left=list(map(lambda a, o, r, c, i: a + o + r + c + i, il_adult_st, il_others, il_rock, il_country, il_indie)))
+plt.barh(y, il_soul, color = "black", left=list(map(lambda a, o, r, c, i, p: a + o + r + c + i + p, il_adult_st, il_others, il_rock, il_country, il_indie, il_pop)))
+plt.barh(y, il_dutch, color = "pink", left=list(map(lambda a, o, r, c, i, p, s: a + o + r + c + i + p + s, il_adult_st, il_others, il_rock, il_country, il_indie, il_pop, il_soul)))
+plt.barh(y, il_electro, color = "gray", left=list(map(lambda a, o, r, c, i, p, s, d: a + o + r + c + i + p + s + d, il_adult_st, il_others, il_rock, il_country, il_indie, il_pop, il_soul, il_dutch)))
+plt.barh(y, il_hip, color = "olive", left=list(map(lambda a, o, r, c, i, p, s, d, e: a + o + r + c + i + p + s + d + e, il_adult_st, il_others, il_rock, il_country, il_indie, il_pop, il_soul, il_dutch, il_electro)))
+plt.barh(y, il_metal, color = "yellow", left=list(map(lambda a, o, r, c, i, p, s, d, e, h: a + o + r + c + i + p + s + d + e + h, il_adult_st, il_others, il_rock, il_country, il_indie, il_pop, il_soul, il_dutch, il_electro, il_hip)))
 
-print([data_gatunek[filtr70].groupby(data_gatunek).count()])
-plt.figure(1, figsize =(7,7))
-plt.pie(data_gatunek[filtr70].groupby(data_gatunek).count(), autopct='%1.1f%%')
-plt.title("Top Genres in the 70's")
-plt.show()
+y_labels = ["lata 50'","lata 60'", "lata 70'", "lata 80'", "lata 90'", "lata 00'", "lata 10'"]
+plt.yticks(y, y_labels)
+plt.title("Gatunki według dekad")
+plt.xlabel("Liczba piosenek")
 
-print([data_gatunek[filtr80].groupby(data_gatunek).count()])
-plt.figure(1, figsize =(7,7))
-plt.pie(data_gatunek[filtr80].groupby(data_gatunek).count(), autopct='%1.1f%%')
-plt.title("Top Genres in the 80's")
-plt.show()
+adult_patch = mpatches.Patch(color = "blue", label = "adult standards")
+country_patch = mpatches.Patch(color = "red", label = "country")
+dutch_patch = mpatches.Patch(color = "pink", label = "dutch cabaret")
+electro_patch = mpatches.Patch(color = "gray", label = "electronic")
+hip_patch = mpatches.Patch(color = "olive", label = "hip hop")
+indie_patch = mpatches.Patch(color = "purple", label = "indie")
+metal_patch = mpatches.Patch(color = "yellow", label = "metal")
+others_patch = mpatches.Patch(color = "orange", label = "others")
+pop_patch = mpatches.Patch(color = "brown", label = "pop")
+rock_patch = mpatches.Patch(color = "green", label = "rock")
+soul_patch = mpatches.Patch(color = "black", label = "soul")
 
-print([data_gatunek[filtr90].groupby(data_gatunek).count()])
-plt.figure(1, figsize =(7,7))
-plt.pie(data_gatunek[filtr90].groupby(data_gatunek).count(), autopct='%1.1f%%')
-plt.title("Top Genres in the 90's")
+#plt.grid(axix = "x")
+plt.legend(handles = [adult_patch, country_patch, dutch_patch, electro_patch, hip_patch, indie_patch, metal_patch, others_patch, pop_patch, rock_patch, soul_patch], title='Legenda', bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.show()
-
-print([data_gatunek[filtr00].groupby(data_gatunek).count()])
-plt.figure(1, figsize =(7,7))
-plt.pie(data_gatunek[filtr00].groupby(data_gatunek).count(), autopct='%1.1f%%')
-plt.title("Top Genres in the 00's")
-plt.show()
-
-print([data_gatunek[filtr10].groupby(data_gatunek).count()])
-plt.figure(1, figsize =(7,7))
-plt.pie(data_gatunek[filtr10].groupby(data_gatunek).count(), autopct='%1.1f%%')
-plt.title("Top Genres in the 10's")
-plt.show()
-   
