@@ -33,7 +33,6 @@ data_gatunek_latin = data_gatunek.str.contains("latin")
 data_gatunek_dance = data_gatunek.str.contains("dance")
 
 
-
 pusta_lista=[]
 for i in range(len(data_gatunek)):
     if data_gatunek_rock[i] == True:
