@@ -1,0 +1,194 @@
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
+
+os.chdir('C:\\Users\Beata\Desktop\AiWD') #PODAĆ ODPOWIEDNIĄ ŚCIEŻKĘ
+os.getcwd()
+os.listdir()
+
+plik = "Spotify-2000.csv"
+
+#WCZYTANIE DANYCH 
+data = pd.read_csv(plik)
+#print(data)
+
+#ZMIENNE GATUNEK I ROK
+data_gatunek = data["Top Genre"]
+data_rok = data["Year"]
+data_subset = data[["Top Genre", "Year"]]
+#print(data_subset)
+
+pd.options.display.max_rows
+print([data_gatunek.groupby(data_gatunek).count()])
+
+#UPORZĄDKOWANIE ZMIENNEJ GATUNEK
+data_gatunek_rock = data_gatunek.str.contains("rock")
+data_gatunek_pop = data_gatunek.str.contains("pop")
+data_gatunek_metal = data_gatunek.str.contains("metal")
+data_gatunek_hiphop = data_gatunek.str.contains("hip hop")
+data_gatunek_indie = data_gatunek.str.contains("indie")
+data_gatunek_soul = data_gatunek.str.contains("soul")
+data_gatunek_reggae = data_gatunek.str.contains("reggae")
+data_gatunek_jazz = data_gatunek.str.contains("jazz")
+data_gatunek_punk = data_gatunek.str.contains("punk")
+data_gatunek_house = data_gatunek.str.contains("house")
+data_gatunek_country = data_gatunek.str.contains("country")
+data_gatunek_funk = data_gatunek.str.contains("funk")
+data_gatunek_folk = data_gatunek.str.contains("folk")
+data_gatunek_dance = data_gatunek.str.contains("dance")
+data_gatunek_latin = data_gatunek.str.contains("latin")
+data_gatunek_motown = data_gatunek.str.contains("motown")
+data_gatunek_blues = data_gatunek.str.contains("blues")
+data_gatunek_disco = data_gatunek.str.contains("disco")
+rock_inne = ["british invasion", "permanent wave","dutch prog", "australian psych", "neo mellow", "mellow gold"]
+electronic = ["electronica", "trance", "electro", "j-core", "happy hardcore", "downtempo", "gabba", "edm", "big room", "big beat"]
+pop_inne = ["levenslied", "schlager music", "boy band"]
+country_inne = ["australian americana", "dutch americana", "stomp and holler"]
+others = ["blues", "bebop", "streektaal","irish singer-songwriter", "classic schlager","compositional ambient","classic soundtrack","ccm","laboratorio", "gangster rap", "british singer-songwriter", "basshall", "celtic", "christelijk", "scottish singer-songwriter", "chanson", "carnaval limburg"]
+
+pusta_lista=[]
+for i in range(len(data_gatunek)):
+    if data_gatunek_rock[i] == True:
+        pusta_lista.append("rock")
+    elif data_gatunek_pop[i] == True:
+        pusta_lista.append("pop")
+    elif data_gatunek_metal[i] == True:
+        pusta_lista.append("metal")
+    elif data_gatunek_hiphop[i] == True:
+        pusta_lista.append("hip hop")
+    elif data_gatunek_indie[i] == True:
+        pusta_lista.append("indie")
+    elif data_gatunek_soul[i] == True:
+        pusta_lista.append("soul")
+    elif data_gatunek_motown[i] == True:
+        pusta_lista.append("soul")
+    elif data_gatunek_reggae[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_jazz[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_punk[i] == True:
+        pusta_lista.append("rock")
+    elif data_gatunek_house[i] == True:
+        pusta_lista.append("electronic")
+    elif data_gatunek_country[i] == True:
+        pusta_lista.append("country")
+    elif data_gatunek_funk[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_folk[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_dance[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_disco[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_latin[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek[i] in others:
+        pusta_lista.append("others")
+    elif data_gatunek[i] in rock_inne:
+        pusta_lista.append("rock")
+    elif data_gatunek[i] in electronic:
+        pusta_lista.append("electronic")
+    elif data_gatunek[i] in pop_inne:
+        pusta_lista.append("pop")
+    elif data_gatunek[i] in country_inne:
+        pusta_lista.append("country")
+    else:
+        pusta_lista.append(data_gatunek[i])
+#print(pusta_lista)
+data["Top Genre"] = pusta_lista
+print(data_gatunek)
+
+#JAKIE GATUNKI I ILE RAZY WYSTĘPUJĄ
+#pd.options.display.max_rows
+#print([data_gatunek.groupby(data_gatunek).count()])
+
+#print([data_gatunek.mode()]) #najczęsciej występuje gatunek ROCK
+#print([data_rok.mode()]) #Najczęsciej występuje utwór z roku 2008
+
+#FILTRACJA NA DEKADY
+#LATA 50'
+filtr50 = data.Year < 1960
+#print(data_subset[filtr50])
+#print([data_gatunek[filtr50].mode()])
+#print([data_gatunek[filtr50].count()])
+
+#LATA 60'
+filtr60 = (data.Year < 1970) & (data.Year > 1959)
+#print(data_subset[filtr60])
+#print([data_gatunek[filtr60].mode()])
+#print([data_gatunek[filtr60].count()])
+
+#LATA 70'
+filtr70 = (data.Year < 1980) & (data.Year > 1969)
+#print(data_subset[filtr70])
+#print([data_gatunek[filtr70].mode()])
+#print([data_gatunek[filtr70].count()])
+
+#LATA 80'
+filtr80 = (data.Year < 1990) & (data.Year > 1979)
+#print(data_subset[filtr80])
+#print([data_gatunek[filtr80].mode()])
+#print([data_gatunek[filtr80].count()])
+
+#LATA 90'
+filtr90 = (data.Year < 2000) & (data.Year > 1989)
+#print(data_subset[filtr90])
+#print([data_gatunek[filtr90].mode()])
+#print([data_gatunek[filtr90].count()])
+
+#LATA 00'
+filtr00 = (data.Year < 2010) & (data.Year > 1999)
+#print(data_subset[filtr00])
+#print([data_gatunek[filtr00].mode()])
+#print([data_gatunek[filtr00].count()])
+
+#LATA 10'
+filtr10 = (data.Year < 2020) & (data.Year > 2009)
+#print(data_subset[filtr10])
+#print([data_gatunek[filtr10].mode()])
+#print([data_gatunek[filtr10].count()])
+
+#################################################
+#WYKRESY
+print(data_gatunek[filtr50].groupby(data_gatunek).count())
+plt.figure(1, figsize =(7,7))
+plt.pie(data_gatunek[filtr50].groupby(data_gatunek).count(), autopct='%1.1f%%')
+plt.title("Top Genres in the 50's")
+plt.show()
+
+print([data_gatunek[filtr60].groupby(data_gatunek).count()])
+plt.figure(1, figsize =(7,7))
+plt.pie(data_gatunek[filtr60].groupby(data_gatunek).count(), autopct='%1.1f%%')
+plt.title("Top Genres in the 60's")
+plt.show()
+
+print([data_gatunek[filtr70].groupby(data_gatunek).count()])
+plt.figure(1, figsize =(7,7))
+plt.pie(data_gatunek[filtr70].groupby(data_gatunek).count(), autopct='%1.1f%%')
+plt.title("Top Genres in the 70's")
+plt.show()
+
+print([data_gatunek[filtr80].groupby(data_gatunek).count()])
+plt.figure(1, figsize =(7,7))
+plt.pie(data_gatunek[filtr80].groupby(data_gatunek).count(), autopct='%1.1f%%')
+plt.title("Top Genres in the 80's")
+plt.show()
+
+print([data_gatunek[filtr90].groupby(data_gatunek).count()])
+plt.figure(1, figsize =(7,7))
+plt.pie(data_gatunek[filtr90].groupby(data_gatunek).count(), autopct='%1.1f%%')
+plt.title("Top Genres in the 90's")
+plt.show()
+
+print([data_gatunek[filtr00].groupby(data_gatunek).count()])
+plt.figure(1, figsize =(7,7))
+plt.pie(data_gatunek[filtr00].groupby(data_gatunek).count(), autopct='%1.1f%%')
+plt.title("Top Genres in the 00's")
+plt.show()
+
+print([data_gatunek[filtr10].groupby(data_gatunek).count()])
+plt.figure(1, figsize =(7,7))
+plt.pie(data_gatunek[filtr10].groupby(data_gatunek).count(), autopct='%1.1f%%')
+plt.title("Top Genres in the 10's")
+plt.show()
+   
