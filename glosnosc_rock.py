@@ -15,23 +15,31 @@ data_subset = data[["Top Genre", "Year"]]
 # #LISTA GATUNKÓW I ILE RAZY WYSTĘPUJĄ
 # print([data_gatunek.groupby(data_gatunek).count()])
 
-# #COS WYSZŁO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 data_gatunek_rock = data_gatunek.str.contains("rock")
 data_gatunek_pop = data_gatunek.str.contains("pop")
-data_gatunek_hiphop = data_gatunek.str.contains("hip hop")
 data_gatunek_metal = data_gatunek.str.contains("metal")
+data_gatunek_hiphop = data_gatunek.str.contains("hip hop")
 data_gatunek_indie = data_gatunek.str.contains("indie")
 data_gatunek_soul = data_gatunek.str.contains("soul")
 data_gatunek_reggae = data_gatunek.str.contains("reggae")
 data_gatunek_jazz = data_gatunek.str.contains("jazz")
-data_gatunek_folk = data_gatunek.str.contains("folk")
-data_gatunek_country = data_gatunek.str.contains("country")
 data_gatunek_punk = data_gatunek.str.contains("punk")
 data_gatunek_house = data_gatunek.str.contains("house")
-data_gatunek_latin = data_gatunek.str.contains("latin")
+data_gatunek_country = data_gatunek.str.contains("country")
+data_gatunek_funk = data_gatunek.str.contains("funk")
+data_gatunek_folk = data_gatunek.str.contains("folk")
 data_gatunek_dance = data_gatunek.str.contains("dance")
-
+data_gatunek_latin = data_gatunek.str.contains("latin")
+data_gatunek_motown = data_gatunek.str.contains("motown")
+data_gatunek_blues = data_gatunek.str.contains("blues")
+data_gatunek_disco = data_gatunek.str.contains("disco")
+data_gatunek_britishinvasion = data_gatunek.str.contains("british invasion")
+rock_inne = ["british invasion", "permanent wave","dutch prog", "australian psych", "neo mellow", "mellow gold"]
+electronic = ["electronica", "trance", "electro", "j-core", "happy hardcore", "downtempo", "gabba", "edm", "big room", "big beat"]
+pop_inne = ["levenslied", "schlager music", "boy band"]
+country_inne = ["australian americana", "dutch americana", "stomp and holler"]
+others = ["blues", "bebop", "streektaal","irish singer-songwriter", "classic schlager","compositional ambient","classic soundtrack","ccm","laboratorio", "gangster rap", "british singer-songwriter", "basshall", "celtic", "christelijk", "scottish singer-songwriter", "chanson", "carnaval limburg"]
 
 pusta_lista=[]
 for i in range(len(data_gatunek)):
@@ -39,29 +47,49 @@ for i in range(len(data_gatunek)):
         pusta_lista.append("rock")
     elif data_gatunek_pop[i] == True:
         pusta_lista.append("pop")
-    elif data_gatunek_hiphop[i] == True:
-        pusta_lista.append("hip hop")
     elif data_gatunek_metal[i] == True:
         pusta_lista.append("metal")
+    elif data_gatunek_hiphop[i] == True:
+        pusta_lista.append("hip hop")
     elif data_gatunek_indie[i] == True:
         pusta_lista.append("indie")
     elif data_gatunek_soul[i] == True:
         pusta_lista.append("soul")
+    elif data_gatunek_motown[i] == True:
+        pusta_lista.append("soul")
     elif data_gatunek_reggae[i] == True:
-        pusta_lista.append("reggae")
+        pusta_lista.append("others")
     elif data_gatunek_jazz[i] == True:
-        pusta_lista.append("jazz")
-    elif data_gatunek_folk[i] == True:
-        pusta_lista.append("folk")
+        pusta_lista.append("others")
+    elif data_gatunek_punk[i] == True:
+        pusta_lista.append("rock")
+    elif data_gatunek_house[i] == True:
+        pusta_lista.append("electronic")
     elif data_gatunek_country[i] == True:
         pusta_lista.append("country")
-    elif data_gatunek_punk[i] == True:
-        pusta_lista.append("punk")
-    elif data_gatunek_house[i] == True:
-        pusta_lista.append("house")
+    elif data_gatunek_funk[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_folk[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_dance[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_disco[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek_latin[i] == True:
+        pusta_lista.append("others")
+    elif data_gatunek[i] in others:
+        pusta_lista.append("others")
+    elif data_gatunek[i] in rock_inne:
+        pusta_lista.append("rock")
+    elif data_gatunek[i] in electronic:
+        pusta_lista.append("electronic")
+    elif data_gatunek[i] in pop_inne:
+        pusta_lista.append("pop")
+    elif data_gatunek[i] in country_inne:
+        pusta_lista.append("country")
     else:
         pusta_lista.append(data_gatunek[i])
-    
+        
         
 #print(pusta_lista)
 data["Top Genre"] = pusta_lista
