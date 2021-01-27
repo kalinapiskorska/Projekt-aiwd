@@ -6,15 +6,8 @@ import matplotlib.pyplot as plt
 plik = 'Spotify-2000.csv'
 data = pd.read_csv(plik)
 
-
-
+# Czyszczenie danych - podział gatunków Beaty
 data_gatunek = data["Top Genre"]
-data_rok = data["Year"]
-data_subset = data[["Top Genre", "Year"]]
-
-# #LISTA GATUNKÓW I ILE RAZY WYSTĘPUJĄ
-# print([data_gatunek.groupby(data_gatunek).count()])
-
 
 data_gatunek_rock = data_gatunek.str.contains("rock")
 data_gatunek_pop = data_gatunek.str.contains("pop")
@@ -90,7 +83,6 @@ for i in range(len(data_gatunek)):
     else:
         pusta_lista.append(data_gatunek[i])
         
-        
 #print(pusta_lista)
 data["Top Genre"] = pusta_lista
 print(data_gatunek)
@@ -98,9 +90,12 @@ print(data_gatunek)
 # print([data_gatunek.groupby(data_gatunek).count()])
 
 
-# Lata i głosnosc ROCK
+# ŚREDNIA GŁOŚNOŚĆ ROCKA A ROK
+
 print(data['Year'])
 
+# Tworzę pustą listę, do której będą dodawane w pętli średnie głośności piosenek 
+# rockowych z danego roku
 lista_rock_loud = []
 
 for i in range(1970,2020):
@@ -112,12 +107,13 @@ for i in range(1970,2020):
     lista_rock_loud.append(mean_rock)
 print(lista_rock_loud)
 
-arr_rock_loud = np.array(lista_rock_loud)
+# Tworzę osie wykresu
 x = np.arange(1970,2020)
-y = arr_rock_loud
+y = lista_rock_loud
+
+# Rysuję wykres liniowy
 plt.plot(x,y)
-plt.title('Srednia głosnosc piosenek rockowych w czasie')
 plt.xlabel('Rok')
-plt.ylabel('Głosnosc')
+plt.ylabel('Głośność')
 plt.show()
 
