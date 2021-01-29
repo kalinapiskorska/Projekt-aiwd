@@ -31,7 +31,7 @@ y = [queen['Energy'].mean(),coldplay['Energy'].mean(),beatles['Energy'].mean()]
 plt.bar(x,y,color='teal')
 # plt.title('Porównanie średniej energetyczności piosenek najpopularniejszych zespołów')
 plt.xlabel('Zespół')
-plt.ylabel('Średnia energetyczność piosenek')
+plt.ylabel('Energetyczność')
 plt.show()
 
 
